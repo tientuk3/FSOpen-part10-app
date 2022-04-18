@@ -1,12 +1,12 @@
-import { Text, Pressable, View, StyleSheet } from 'react-native';
-import Constants from 'expo-constants';
+import * as React from 'react';
+import { View, StyleSheet } from 'react-native';
+import Text from './Text';
+import { Link } from 'react-router-native';
 import theme from '../theme';
 
 const styles = StyleSheet.create({
   container: {
-    paddingLeft: 10,
-    paddingRight: 10,
-    paddingBottom: 10,
+    padding: 14,
   },
   text: {
     color: '#eeeeee',
@@ -15,14 +15,18 @@ const styles = StyleSheet.create({
   }
 });
 
-const AppBarTab = (props) => {
+const AppBarTab = ({ id, nimi, destination, handleStateChange, selectedTab }) => {
+  const bgcolor = id == selectedTab ? theme.colors.appBarSelectedTab : theme.colors.appBarBG
+  const handlePress = () => { handleStateChange(id) }
+
   return (
-    <View style={styles.container}>
-      <Pressable onPress={() => {}}>
-        <Text style={styles.text}>{props.nimi}</Text>
-      </Pressable>
+    <View style={[styles.container, {backgroundColor: bgcolor}]}>
+      <Link to={destination} onPress={handlePress}>
+        <Text style={styles.text}>{nimi}</Text>
+      </Link>
     </View>
   );
+
 };
 
 export default AppBarTab;
