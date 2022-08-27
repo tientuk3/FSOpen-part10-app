@@ -1,5 +1,9 @@
 {
-  "plugins": ["react", "react-native"],
+  "plugins": [
+    "react",
+    "react-native",
+    "react-hooks"
+  ],
   "settings": {
     "react": {
       "version": "detect"
