@@ -1,8 +1,12 @@
 import { View, ScrollView, StyleSheet } from 'react-native';
+import { useQuery, useApolloClient } from '@apollo/client';
 import React, { useState } from 'react';
 import Constants from 'expo-constants';
 import theme from '../theme';
 import AppBarTab from './AppBarTab';
+import { GET_ME } from '../graphql/queries';
+import useAuthStorage from '../hooks/useAuthStorage';
+import { useNavigate } from 'react-router-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -16,17 +20,33 @@ const styles = StyleSheet.create({
   }
 });
 
-const AppBar = () => {
-  const [selectedTab, setSelectedTab] = useState('1')
-  const stateChangeHandler = id => {
-    setSelectedTab(id)
+const AppBar = ({ selectedTab, handleStateChange }) => {
+  let navigate = useNavigate();
+  const authStorage = useAuthStorage();
+  const client = useApolloClient();
+  const [currentMe, setCurrentMe] = useState(null);
+
+  useQuery(GET_ME, {
+    fetchPolicy: 'cache-and-network',
+    onCompleted: (data) => {setCurrentMe(data.me)}
+  });
+
+  const signOut = () => {
+    authStorage.removeAccessToken();
+    client.resetStore();
+    navigate("/"); // to default view
   }
 
   return (
     <View style={styles.container}>
       <ScrollView horizontal>
-        <AppBarTab id='1' nimi='Repositories' destination='/' handleStateChange={stateChangeHandler} selectedTab={selectedTab}/>
-        <AppBarTab id='2' nimi='Sign in' destination='/signin' handleStateChange={stateChangeHandler} selectedTab={selectedTab}/>
+        <AppBarTab id='1' nimi='Repositories' destination='/' handleStateChange={handleStateChange} selectedTab={selectedTab}/>
+        {currentMe == null &&
+          <AppBarTab id='2' nimi='Sign in' destination='/signin' handleStateChange={handleStateChange} selectedTab={selectedTab}/>
+        }
+        {currentMe &&
+          <AppBarTab id='3' nimi='Sign out' destination='/' handleStateChange={signOut} selectedTab={selectedTab}/>
+        }
       </ScrollView>
     </View>
   );

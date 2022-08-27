@@ -4,6 +4,8 @@ import Text from './Text';
 import { Formik } from 'formik';
 import theme from '../theme';
 import * as yup from 'yup';
+import useSignIn from '../hooks/useSignIn';
+import { useNavigate } from 'react-router-native';
 
 const initialValues = {
   username: '',
@@ -60,12 +62,27 @@ const SignInForm = ({ onSubmit }) => {
   );
 };
 
-const SignIn = () => {
-  const onSubmit = values => {
-    const username = String(values.username);
-    const password = String(values.password);
+const SignIn = ({signInCallback}) => {
+  const [signIn] = useSignIn();
+  let navigate = useNavigate();
+
+  const onSubmit = async (values) => {
+    const { username, password } = values;
+
+    console.log('Signing in...');
     console.log(`username: ${username}`);
     console.log(`password: ${password}`);
+
+    try {
+      const { data } = await signIn({ username, password });
+      console.log('Sign in success.')
+      console.log(data);
+      signInCallback(); // useNavigate would not otherwise change the selected tab state
+      navigate("/");
+    } catch (e) {
+      console.log(e);
+    }
+
   };
 
   return (
