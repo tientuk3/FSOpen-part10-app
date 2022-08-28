@@ -21,7 +21,10 @@
     ],
     "setupFilesAfterEnv": [
       "<rootDir>/setupTests.js"
-    ]
+    ],
+    "moduleNameMapper": {
+      "^asap\/+.*$": "<rootDir>/asap.js"
+    }
   },
   "dependencies": {
     "@apollo/client": "^3.6.9",
