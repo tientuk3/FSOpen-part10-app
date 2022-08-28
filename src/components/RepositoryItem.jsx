@@ -53,7 +53,7 @@ const SubItem = ({ name, count }) => {
     lkm = `${(count/1000).toFixed(1)}k`
   }
   return (
-    <View style={{alignItems: 'center', paddingHorizontal: 12}}>
+    <View testID="repositorySubItem" style={{alignItems: 'center', paddingHorizontal: 12}}>
       <Text style={styles.lukumaara}>{lkm}</Text>
       <Text style={{color: '#616161', fontSize: 14}}>{name}</Text>
     </View>
@@ -63,7 +63,7 @@ const SubItem = ({ name, count }) => {
 const RepositoryItem = (props) => {
   const item = props.item
   return (
-    <View style={styles.container}>
+    <View testID="repositoryItem" style={styles.container}>
       <View style={{flexDirection: 'row'}}>
         <Image
           style={styles.kuva}
