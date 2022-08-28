@@ -62,9 +62,7 @@ const SignInForm = ({ onSubmit }) => {
   );
 };
 
-const SignIn = ({signInCallback}) => {
-  const [signIn] = useSignIn();
-  let navigate = useNavigate();
+const SignInContainer = ({signInCallback, signInFunction, navigateFunction}) => {
 
   const onSubmit = async (values) => {
     const { username, password } = values;
@@ -74,11 +72,11 @@ const SignIn = ({signInCallback}) => {
     console.log(`password: ${password}`);
 
     try {
-      const { data } = await signIn({ username, password });
+      const { data } = await signInFunction({ username, password });
       console.log('Sign in success.')
       console.log(data);
       signInCallback(); // useNavigate would not otherwise change the selected tab state
-      navigate("/");
+      navigateFunction("/");
     } catch (e) {
       console.log(e);
     }
@@ -90,6 +88,18 @@ const SignIn = ({signInCallback}) => {
       {({ handleSubmit }) => <SignInForm onSubmit={handleSubmit} />}
     </Formik>
   );
+};
+
+// wrapper function to contain the side effects of the component
+const SignIn = ({signInCallback}) => {
+  const [signIn] = useSignIn();
+  let navigate = useNavigate();
+
+  return (<SignInContainer
+            signInCallback={signInCallback}
+            signInFunction={signIn}
+            navigateFunction={navigate}
+          />);
 };
 
 export default SignIn;
