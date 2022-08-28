@@ -53,7 +53,7 @@ const SignInForm = ({ onSubmit }) => {
     <View style={styles.container}>
       <FormikTextInput name="username" placeholder="Username" />
       <FormikTextInput name="password" placeholder="Password" />
-      <View style={styles.signInContainer}>
+      <View testID='signInButton' style={styles.signInContainer}>
         <Pressable onPress={onSubmit}>
           <Text style={styles.signInText}>Sign in</Text>
         </Pressable>
@@ -62,27 +62,7 @@ const SignInForm = ({ onSubmit }) => {
   );
 };
 
-const SignInContainer = ({signInCallback, signInFunction, navigateFunction}) => {
-
-  const onSubmit = async (values) => {
-    const { username, password } = values;
-
-    console.log('Signing in...');
-    console.log(`username: ${username}`);
-    console.log(`password: ${password}`);
-
-    try {
-      const { data } = await signInFunction({ username, password });
-      console.log('Sign in success.')
-      console.log(data);
-      signInCallback(); // useNavigate would not otherwise change the selected tab state
-      navigateFunction("/");
-    } catch (e) {
-      console.log(e);
-    }
-
-  };
-
+export const SignInContainer = ({onSubmit}) => {
   return (
     <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
       {({ handleSubmit }) => <SignInForm onSubmit={handleSubmit} />}
@@ -95,11 +75,26 @@ const SignIn = ({signInCallback}) => {
   const [signIn] = useSignIn();
   let navigate = useNavigate();
 
-  return (<SignInContainer
-            signInCallback={signInCallback}
-            signInFunction={signIn}
-            navigateFunction={navigate}
-          />);
+  const onSubmit = async (values) => {
+    const { username, password } = values;
+
+    console.log('Signing in...');
+    console.log(`username: ${username}`);
+    console.log(`password: ${password}`);
+
+    try {
+      const { data } = await signIn({ username, password });
+      console.log('Sign in success.')
+      console.log(data);
+      signInCallback(); // useNavigate would not otherwise change the selected tab state
+      navigate("/");
+    } catch (e) {
+      console.log(e);
+    }
+
+  };
+
+  return (<SignInContainer onSubmit={onSubmit}/>);
 };
 
 export default SignIn;
