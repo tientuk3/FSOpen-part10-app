@@ -9,8 +9,7 @@ import * as Linking from 'expo-linking';
 
 const styles = StyleSheet.create({
   container: {
-    height: '50%',
-    backgroundColor: theme.colors.mainBG,
+    minHeight: 230
   },
 });
 
@@ -47,13 +46,11 @@ const SingleItemView = (props) => {
 
   return (
     <View>
-      {repository &&
-          <FlatList
-            data={[repository]}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (<RepositoryItem item={item} enableUrlButton={true} linkHandler={linkHandler} />)}
-          />
-      }
+      <View style={styles.container}>
+        {repository &&
+            <RepositoryItem item={repository} enableUrlButton={true} linkHandler={linkHandler} />
+        }
+      </View>
       {reviews &&
           <FlatList
             data={reviewNodes}
