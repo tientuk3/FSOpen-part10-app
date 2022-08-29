@@ -3,7 +3,8 @@ import theme from '../theme';
 import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_SINGLE } from '../graphql/queries';
-import RepositoryItem from "./RepositoryItem";
+import RepositoryItem from './RepositoryItem';
+import ReviewItem from './ReviewItem';
 import * as Linking from 'expo-linking';
 
 const styles = StyleSheet.create({
@@ -18,6 +19,11 @@ const SingleItemView = (props) => {
   console.log(id)
 
   const [repository, setRepository] = useState()
+  const [reviews, setReviews] = useState()
+
+  const reviewNodes = reviews
+    ? reviews.edges.map((edge) => edge.node)
+    : [];
 
   const linkHandler = () => {
     console.log('clicked button')
@@ -31,10 +37,12 @@ const SingleItemView = (props) => {
   });
 
   const setRepositoryData = (data) => {
-    console.log('prööt')
-    console.log(data.repository)
-    const json = data.repository;
-    setRepository(json);
+    const repo = data.repository;
+    setRepository(repo);
+    setReviews(repo.reviews);
+    console.log(repo)
+    console.log("--- ARVOSTELUT ---")
+    console.log(repo.reviews)
   };
 
   return (
@@ -44,6 +52,13 @@ const SingleItemView = (props) => {
             data={[repository]}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (<RepositoryItem item={item} enableUrlButton={true} linkHandler={linkHandler} />)}
+          />
+      }
+      {reviews &&
+          <FlatList
+            data={reviewNodes}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (<ReviewItem item={item} />)}
           />
       }
     </View>
