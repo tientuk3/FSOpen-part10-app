@@ -1,8 +1,9 @@
-import { FlatList } from 'react-native';
+import { FlatList, TouchableOpacity } from 'react-native';
 import RepositoryItem from './RepositoryItem'
 import useRepositories from '../hooks/useRepositories';
+import { useNavigate } from 'react-router-native';
 
-export const RepositoryListContainer = ({ repositories }) => {
+export const RepositoryListContainer = ({ repositories, handleClickRepo }) => {
   const repositoryNodes = repositories
     ? repositories.edges.map((edge) => edge.node)
     : [];
@@ -11,16 +12,26 @@ export const RepositoryListContainer = ({ repositories }) => {
     <FlatList
       data={repositoryNodes}
       keyExtractor={(item) => item.id}
-      renderItem={RepositoryItem}
+      renderItem={({ item }) => (
+        <TouchableOpacity onPress={ () => handleClickRepo(item.id) }>
+          <RepositoryItem item={item} enableUrlButton={false} />
+        </TouchableOpacity>
+      )}
     />
   );
 };
 
 
-const RepositoryList = () => {
+const RepositoryList = ({ handleSetId }) => {
   const { repositories } = useRepositories();
+  const navigate = useNavigate();
 
-  return <RepositoryListContainer repositories={repositories} />;
+  const handleClickRepo = id => {
+    handleSetId(id)
+    navigate("/item")
+  }
+
+  return <RepositoryListContainer repositories={repositories} handleClickRepo={handleClickRepo} />;
 };
 
 export default RepositoryList;

@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { Route, Routes, Navigate } from 'react-router-native';
 
 import RepositoryList from './RepositoryList';
+import SingleItemView from './SingleItemView';
 import AppBar from './AppBar';
 import theme from '../theme';
 import SignIn from './SignIn';
@@ -25,12 +26,19 @@ const Main = () => {
     setSelectedTab(id)
   }
 
+  const [selectedSingleId, setSelectedSingleId] = useState(null)
+  const setId = id => {
+    setSelectedSingleId(id)
+    setSelectedTab(4) // ???
+  }
+
   return (
     <View style={styles.container}>
       <AppBar selectedTab={selectedTab} handleStateChange={stateChangeHandler} />
       <Routes>
-        <Route path="/" element={<RepositoryList />} exact />
+        <Route path="/" element={<RepositoryList handleSetId={setId}/>} exact />
         <Route path="/signin" element={<SignIn signInCallback={setDefaultTab} />} exact />
+        <Route path="/item" element={<SingleItemView signInCallback={setDefaultTab} id={selectedSingleId} />} exact />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </View>

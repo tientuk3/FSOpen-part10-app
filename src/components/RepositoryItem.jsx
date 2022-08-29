@@ -1,4 +1,4 @@
-import { Image, Text, View, StyleSheet } from 'react-native';
+import { Image, Text, View, StyleSheet, Pressable } from 'react-native';
 import theme from '../theme';
 
 const styles = StyleSheet.create({
@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+    paddingBottom: 15,
     marginVertical: 8,
     marginHorizontal: 12,
     borderRadius: 10,
@@ -44,6 +45,21 @@ const styles = StyleSheet.create({
   lukumaara: {
     fontWeight: 'bold',
     fontSize: 16,
+  },
+  nappiContainer: {
+    backgroundColor: theme.colors.signInButton,
+    width: '80%',
+    borderRadius: 7,
+    alignItems: 'center',
+    marginTop: 10,
+    alignSelf: 'center',
+  },
+  nappi: {
+    fontWeight: 'bold',
+    fontSize: 16,
+    padding: 10,
+    paddingTop: 10,
+    color: '#ffffff',
   }
 });
 
@@ -62,6 +78,8 @@ const SubItem = ({ name, count }) => {
 
 const RepositoryItem = (props) => {
   const item = props.item
+  const enableUrlButton = props.enableUrlButton
+
   return (
     <View testID="repositoryItem" style={styles.container}>
       <View style={{flexDirection: 'row'}}>
@@ -84,6 +102,14 @@ const RepositoryItem = (props) => {
         <SubItem name='Reviews' count={item.reviewCount} />
         <SubItem name='Rating' count={item.ratingAverage} />
       </View>
+
+      {enableUrlButton &&
+      <View style={styles.nappiContainer}>
+        <Pressable onPress={props.linkHandler}>
+          <Text style={styles.nappi}>Open in Github</Text>
+        </Pressable>
+      </View>
+      }
       
     </View>
   )
