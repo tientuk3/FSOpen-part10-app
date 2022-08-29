@@ -44,18 +44,24 @@ const SingleItemView = (props) => {
     console.log(repo.reviews)
   };
 
-  return (
-    <View>
-      <View style={styles.container}>
+  const header = () => {
+    return(
+      <View>
         {repository &&
             <RepositoryItem item={repository} enableUrlButton={true} linkHandler={linkHandler} />
         }
       </View>
+    )
+  }
+
+  return (
+    <View>
       {reviews &&
           <FlatList
             data={reviewNodes}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (<ReviewItem item={item} />)}
+            ListHeaderComponent={header}
           />
       }
     </View>
