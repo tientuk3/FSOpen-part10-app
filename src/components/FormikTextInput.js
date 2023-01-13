@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 const FormikTextInput = ({ name, ...props }) => {
   const [field, meta, helpers] = useField(name);
   const showError = meta.touched && meta.error;
-  const secureTextEntry = name === 'password' ? true : false
+  const secureTextEntry = (name === 'password' || name === 'confirmPassword') ? true : false
 
   return (
     <>

@@ -45,6 +45,8 @@ const validationSchema = yup.object().shape({
     .required('Pakollinen kenttä'),
   rating: yup
     .number()
+    .min(0)
+    .max(100)
     .required()
     .positive()
     .integer(), // TODO: bound to 0..100

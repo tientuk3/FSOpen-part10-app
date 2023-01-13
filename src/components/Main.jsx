@@ -8,6 +8,7 @@ import AppBar from './AppBar';
 import theme from '../theme';
 import SignIn from './SignIn';
 import CreateReview from './CreateReview';
+import SignUp from './SignUp';
 
 const styles = StyleSheet.create({
   container: {
@@ -39,6 +40,7 @@ const Main = () => {
       <Routes>
         <Route path="/" element={<RepositoryList handleSetId={setId}/>} exact />
         <Route path="/signin" element={<SignIn signInCallback={setDefaultTab} />} exact />
+        <Route path="/signup" element={<SignUp onSuccess={setDefaultTab} />} exact />
         <Route path="/item" element={<SingleItemView signInCallback={setDefaultTab} id={selectedSingleId} />} exact />
         <Route path="/createreview" element={<CreateReview handleSetId={setId} />} exact />
         <Route path="*" element={<Navigate to="/" replace />} />
