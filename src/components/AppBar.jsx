@@ -47,8 +47,10 @@ const AppBar = ({ selectedTab, handleStateChange }) => {
         {currentMe &&
           <AppBarTab id='3' nimi='Sign out' destination='/' handleStateChange={signOut} selectedTab={selectedTab}/>
         }
-        <AppBarTab id='4' nimi='Reviews' destination='/item' handleStateChange={handleStateChange} selectedTab={selectedTab}/>
-      </ScrollView>
+        {currentMe &&
+          <AppBarTab id='4' nimi='Create a review' destination='/createreview' handleStateChange={handleStateChange} selectedTab={selectedTab}/>
+        }
+        </ScrollView>
     </View>
   );
 };

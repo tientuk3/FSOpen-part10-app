@@ -7,6 +7,7 @@ import SingleItemView from './SingleItemView';
 import AppBar from './AppBar';
 import theme from '../theme';
 import SignIn from './SignIn';
+import CreateReview from './CreateReview';
 
 const styles = StyleSheet.create({
   container: {
@@ -29,7 +30,7 @@ const Main = () => {
   const [selectedSingleId, setSelectedSingleId] = useState(null)
   const setId = id => {
     setSelectedSingleId(id)
-    setSelectedTab(4) // ???
+    setSelectedTab(1) // ???
   }
 
   return (
@@ -39,6 +40,7 @@ const Main = () => {
         <Route path="/" element={<RepositoryList handleSetId={setId}/>} exact />
         <Route path="/signin" element={<SignIn signInCallback={setDefaultTab} />} exact />
         <Route path="/item" element={<SingleItemView signInCallback={setDefaultTab} id={selectedSingleId} />} exact />
+        <Route path="/createreview" element={<CreateReview handleSetId={setId} />} exact />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </View>
