@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
 });
 
 const Main = () => {
-  
   const [selectedTab, setSelectedTab] = useState('1');
   const setDefaultTab = () => {
     setSelectedTab('1');
