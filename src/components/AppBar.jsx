@@ -50,8 +50,11 @@ const AppBar = ({ selectedTab, handleStateChange }) => {
         {currentMe &&
           <AppBarTab id='4' nimi='Create a review' destination='/createreview' handleStateChange={handleStateChange} selectedTab={selectedTab}/>
         }
+        {currentMe &&
+          <AppBarTab id='5' nimi='My reviews' destination='/myreviews' handleStateChange={handleStateChange} selectedTab={selectedTab}/>
+        }
         {!currentMe &&
-          <AppBarTab id='5' nimi='Sign up' destination='/signup' handleStateChange={handleStateChange} selectedTab={selectedTab}/>
+          <AppBarTab id='6' nimi='Sign up' destination='/signup' handleStateChange={handleStateChange} selectedTab={selectedTab}/>
         }
         </ScrollView>
     </View>

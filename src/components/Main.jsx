@@ -9,6 +9,7 @@ import theme from '../theme';
 import SignIn from './SignIn';
 import CreateReview from './CreateReview';
 import SignUp from './SignUp';
+import MyReviewsView from './MyReviewsView';
 
 const styles = StyleSheet.create({
   container: {
@@ -42,6 +43,7 @@ const Main = () => {
         <Route path="/signup" element={<SignUp onSuccess={setDefaultTab} />} exact />
         <Route path="/item" element={<SingleItemView signInCallback={setDefaultTab} id={selectedSingleId} />} exact />
         <Route path="/createreview" element={<CreateReview handleSetId={setId} />} exact />
+        <Route path="/myreviews" element={<MyReviewsView handleSetId={setId} />} exact />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </View>

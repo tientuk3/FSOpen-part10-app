@@ -85,4 +85,26 @@ const ReviewItem = (props) => {
   )
 }
 
+export const MyReviewItem = (props) => {
+  const item = props.item
+  const dateString = item.createdAt
+  const formattedDate = dateFormat(dateString, 'mediumDate')
+  
+  return (
+    <View testID="reviewItem" style={styles.container}>
+      <View style={{flexDirection: 'row'}}>
+        <View style={styles.round}>
+          <Text style={styles.arvosana}>{item.rating}</Text>
+        </View>
+        <View style={styles.otsikkokenttä}>
+          <Text style={styles.otsikko}>{item.repository.ownerName}/{item.repository.name}</Text>
+          <Text style={styles.pvm}>{formattedDate}</Text>
+          <Text style={styles.teksti}>{item.text}</Text>
+        </View>
+      </View>
+      
+    </View>
+  )
+}
+
 export default ReviewItem;

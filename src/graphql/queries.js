@@ -20,6 +20,35 @@ export const GET_REPOSITORIES = gql`
     }
 `;
 
+export const GET_ALL_REVIEWS = gql`
+    query {
+        repositories {
+            edges {
+                node {
+                    reviews {
+                        edges {
+                            node {
+                                id
+                                text
+                                rating
+                                createdAt
+                                user {
+                                    id
+                                    username
+                                }
+                                repository {
+                                    name
+                                    ownerName
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+`;
+
 export const GET_ME = gql`
     {
         me {
