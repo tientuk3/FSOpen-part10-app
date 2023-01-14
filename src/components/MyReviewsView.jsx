@@ -1,19 +1,10 @@
-import { View, StyleSheet, FlatList } from 'react-native';
-import theme from '../theme';
+import { View, FlatList } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_ALL_REVIEWS, GET_ME } from '../graphql/queries';
 import { MyReviewItem } from './ReviewItem';
 
-const styles = StyleSheet.create({
-  container: {
-    minHeight: 230
-  },
-});
-
-const MyReviewsView = (props) => {
-  const id = props.id
-  console.log(id)
+const MyReviewsView = () => {
 
   const [reviews, setReviews] = useState(null)
   const [currentMe, setCurrentMe] = useState(null)
@@ -48,9 +39,9 @@ const MyReviewsView = (props) => {
   };
 
   return (
-    <View>
+    <View style={{flex: 1}}>
       {reviews &&
-          <FlatList
+          <FlatList contentContainerStyle={{ paddingBottom: 20 }}
             data={myReviews}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (<MyReviewItem item={item} />)}

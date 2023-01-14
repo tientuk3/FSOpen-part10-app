@@ -1,5 +1,5 @@
 import { View, Pressable, StyleSheet } from 'react-native';
-import { useMutation, useApolloClient } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import FormikTextInput from './FormikTextInput';
 import Text from './Text';
 import { Formik } from 'formik';
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   },
   signInContainer: {
     backgroundColor: theme.colors.signInButton,
-    width: '30%',
+    width: '100%',
     borderRadius: 7,
     alignItems: 'center',
   },

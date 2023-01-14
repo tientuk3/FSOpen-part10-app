@@ -43,7 +43,7 @@ const Main = () => {
         <Route path="/signup" element={<SignUp onSuccess={setDefaultTab} />} exact />
         <Route path="/item" element={<SingleItemView signInCallback={setDefaultTab} id={selectedSingleId} />} exact />
         <Route path="/createreview" element={<CreateReview handleSetId={setId} />} exact />
-        <Route path="/myreviews" element={<MyReviewsView handleSetId={setId} />} exact />
+        <Route path="/myreviews" element={<MyReviewsView />} exact />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </View>

@@ -1,11 +1,12 @@
 import { View, Pressable, StyleSheet } from 'react-native';
+import { useMutation } from '@apollo/client';
 import FormikTextInput from './FormikTextInput';
 import Text from './Text';
 import { Formik } from 'formik';
 import theme from '../theme';
 import * as yup from 'yup';
 import { useNavigate } from 'react-router-native';
-import useCreateReview from '../hooks/useCreateReview';
+import { CREATE_REVIEW } from '../graphql/mutations';
 
 const initialValues = {
   ownerName: '',
@@ -26,7 +27,7 @@ const styles = StyleSheet.create({
   },
   signInContainer: {
     backgroundColor: theme.colors.signInButton,
-    width: '30%',
+    width: '100%',
     borderRadius: 7,
     alignItems: 'center',
   },
@@ -48,8 +49,7 @@ const validationSchema = yup.object().shape({
     .min(0)
     .max(100)
     .required()
-    .positive()
-    .integer(), // TODO: bound to 0..100
+    .integer(),
   repositoryName: yup
     .string()
     .required('Pakollinen kenttä'),
@@ -83,8 +83,26 @@ export const CreateReviewContainer = ({onSubmit}) => {
 
 // wrapper function to contain the side effects of the component
 const CreateReview = ({handleSetId}) => {
-  const [createReview, result] = useCreateReview();
   let navigate = useNavigate();
+  const [mutate] = useMutation(CREATE_REVIEW);
+  
+  const createReview = async ({ ownerName, rating, repositoryName, text }) => {
+    const args = {
+      "review": {
+        "ownerName": ownerName,
+        "rating": Number(rating),
+        "repositoryName": repositoryName,
+        "text": text
+      }
+    };
+
+    try {
+      const data = await mutate({ variables: args });
+      return data;
+    } catch (e) {
+      // console.log(JSON.stringify(e, null, 2));
+    }
+  };
 
   const onCreateSuccess = id => {
     handleSetId(id)

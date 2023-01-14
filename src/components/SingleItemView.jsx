@@ -55,9 +55,9 @@ const SingleItemView = (props) => {
   }
 
   return (
-    <View>
+    <View style={{flex: 1}}>
       {reviews &&
-          <FlatList
+          <FlatList contentContainerStyle={{ paddingBottom: 20 }}
             data={reviewNodes}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (<ReviewItem item={item} />)}

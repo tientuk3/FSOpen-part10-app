@@ -30,7 +30,7 @@ export const RepositoryListContainer = ({ repositories, handleClickRepo, handleC
     : [];
 
   return (
-    <FlatList
+    <FlatList contentContainerStyle={{ paddingBottom: 20 }}
       data={repositoryNodes}
       keyExtractor={(item) => item.id}
       ListHeaderComponent={<HeaderComponent pickerValue={pickerValue} handleChangeSelected={handleChangeSelected} searchText={searchText} onSearchTextChange={onSearchTextChange} /> }
